@@ -10,7 +10,7 @@ using namespace std;
 
 struct infoProduct{
     string name;
-    int price;
+    float price;
     int amount;
     string city;
 };
