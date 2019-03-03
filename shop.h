@@ -309,10 +309,12 @@ void buyProduct(string currentUser, int row){
     cout << productAmountMessage;
     cin >> amountToBuy;
     bool isCorrectData = false;
+    if ( amountToBuy > 0 )
+    {
         for (multimap<string,infoProduct>::iterator it = DatabaseProduct.begin(); it != DatabaseProduct.end(); it++)
         {
 
-           if (it->first == productSeller && it->second.name == productName && it->second.amount - amountToBuy >= 0)
+           if (it->first == productSeller && it->second.name == productName && it->second.amount - amountToBuy >= 0 )
             {
                if (DatabaseUsers[currentUser].balance - it->second.price*amountToBuy >=0)
                 {
@@ -353,17 +355,13 @@ void buyProduct(string currentUser, int row){
                     viewAllProducts(currentUser);
                     }
             }
-            else
-            {
-                string errorMessage = "Invalid Name or Insufficient Amount!Press ENTER to try again...";
-                goToXY(84- errorMessage.size()/2, row++);
-                cout << errorMessage;
-                cin.ignore();
-                cin.get();
-                system("cls");
-                viewAllProducts(currentUser);
-            }
         }
+    }
+    else
+    {
+        system("cls");
+        viewAllProducts(currentUser);
+    }
 
     if(isCorrectData)
     {
