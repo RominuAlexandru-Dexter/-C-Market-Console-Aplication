@@ -331,46 +331,60 @@ void buyProduct(string currentUser, int row){
         for (multimap<string,infoProduct>::iterator it = DatabaseProduct.begin(); it != DatabaseProduct.end(); it++)
         {
 
-           if (it->first == productSeller && it->second.name == productName && it->second.amount - amountToBuy >= 0 )
+           if (it->first == productSeller && it->second.name == productName  )
             {
-               if (DatabaseUsers[currentUser].balance - it->second.price*amountToBuy >=0)
+                if ( it->second.amount - amountToBuy >= 0 )
                 {
-                    DatabaseUsers[currentUser].balance -= it->second.price*amountToBuy;
-                    DatabaseUsers[productSeller].balance += it->second.price*amountToBuy;
+                    if (DatabaseUsers[currentUser].balance - it->second.price*amountToBuy >=0)
+                    {
+                        DatabaseUsers[currentUser].balance -= it->second.price*amountToBuy;
+                        DatabaseUsers[productSeller].balance += it->second.price*amountToBuy;
 
-                    if (it->second.amount - amountToBuy > 0)
-                        it->second.amount -= amountToBuy;
-                    else
-                        DatabaseProduct.erase(it);
+                        if (it->second.amount - amountToBuy > 0)
+                            it->second.amount -= amountToBuy;
+                        else
+                            DatabaseProduct.erase(it);
 
-                    updateDatabaseProduct();
-                    updateDatabaseUsers();
-                    isCorrectData = true;
-                    string succesMessage = "The product was purchased!";
-                    string continueMessage = "Press ENTER to try again...";
+                        updateDatabaseProduct();
+                        updateDatabaseUsers();
+                        isCorrectData = true;
+                        string succesMessage = "The product was purchased!";
+                        string continueMessage = "Press ENTER to try again...";
 
-                    goToXY(84 - succesMessage.size()/2 , row++);
-                    cout << succesMessage;
-                    goToXY(84 - continueMessage.size()/2, row++);
-                    cout << continueMessage;
-                    cin.ignore();
-                    cin.get();
-                    system("cls");
-                    viewAllProducts(currentUser);
+                        goToXY(84 - succesMessage.size()/2 , row++);
+                        cout << succesMessage;
+                        goToXY(84 - continueMessage.size()/2, row++);
+                        cout << continueMessage;
+                        cin.ignore();
+                        cin.get();
+                        system("cls");
+                        viewAllProducts(currentUser);
+                        }
+                        else
+                        {
+                        string errorMessage = "Not enough money!";
+                        string continueMessage = "Press ENTER to try again...";
+                        goToXY(84 - errorMessage.size()/2 , row++);
+                        cout << errorMessage;
+                        goToXY(84 - continueMessage.size()/2, row++);
+                        cout << continueMessage;
+                        cin.ignore();
+                        cin.get();
+                        system("cls");
+                        viewAllProducts(currentUser);
+                        }
                     }
                     else
                     {
-                    string errorMessage = "Not enough money!";
-                    string continueMessage = "Press ENTER to try again...";
-                    goToXY(84 - errorMessage.size()/2 , row++);
-                    cout << errorMessage;
-                    goToXY(84 - continueMessage.size()/2, row++);
-                    cout << continueMessage;
-                    cin.ignore();
-                    cin.get();
-                    system("cls");
-                    viewAllProducts(currentUser);
+                        string errorMessage = "Not enough amount! Press ENTER to try again...";
+                        goToXY(84 - errorMessage.size()/2 , row++);
+                        cout << errorMessage;
+                        cin.ignore();
+                        cin.get();
+                        system("cls");
+                        viewAllProducts(currentUser);
                     }
+
             }
         }
     }
