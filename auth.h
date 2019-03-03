@@ -33,7 +33,7 @@ void initDatabaseUsers(){
     }
 
     string dbMessage = "Database Users Initialized.";
-    goToXY( 85 - dbMessage.size()/2, 25);
+    goToXY( 84 - dbMessage.size()/2, 25);
     cout << dbMessage;
     Sleep(1500);
 }
@@ -51,31 +51,36 @@ void signUp(){
     string username;
     int row = 0;
     string usernameMessage = "Your new username: ";
-    goToXY(85 - usernameMessage.size()/2 , 20 + row++);
+    goToXY(84 - usernameMessage.size()/2 , 20 + row++);
     cout << usernameMessage;
     cin >> username;
 
-    string passwordMessage = "Your parola: ";
-    goToXY(85 - passwordMessage.size()/2 , 20 + row ++);
+    string passwordMessage = "Your password: ";
+    goToXY(84 - passwordMessage.size()/2 , 20 + row ++);
     cout << passwordMessage;
     cin >> newUserData.password;
-
-    newUserData.balance = 0;
+    bool isGoodPass = false;
+    for ( int i = 0 ; i <= newUserData.password.size() ; ++ i )
+    {
+        if ( isdigit(newUserData.password[i]) || newUserData.password[i] == '!' || newUserData.password[i] == '@' || newUserData.password[i] == '#' || newUserData.password[i] == '$' || newUserData.password[i] == '%' || newUserData.password[i] == '^' || newUserData.password[i] == '&' || newUserData.password[i] == '*')
+        isGoodPass = true;
+    }
+    newUserData.balance = 20;
 
     if ( DatabaseUsers.count(username) )
     {
         string errorMessage = " already added.Press ENTER to retry.";
-        goToXY(85 - (username.size()/2 + errorMessage.size()/2), 20 + ++row);
+        goToXY(84 - (username.size()/2 + errorMessage.size()/2), 20 + ++row);
         cout << "User " << username << errorMessage;
         cin.ignore();
         cin.get();
         system("cls");
         signUp();
     }
-    else if (newUserData.password.size() < 8)
+    else if (newUserData.password.size() < 8 && !isGoodPass )
         {
-            string errorMessage = "Sorry but your password must contain 8 characters.Press ENTER to retry";
-            goToXY(85 - errorMessage.size()/2, 20 + ++row);
+            string errorMessage = "Sorry but your password must contain 8 characters and contain one number and one special character.Press ENTER to retry...";
+            goToXY(84 - errorMessage.size()/2, 20 + ++row);
             cout << errorMessage;
             cin.ignore();
             cin.get();
@@ -85,10 +90,11 @@ void signUp(){
         else
         {
             DatabaseUsers[username] = newUserData;
-            string succesMessage = " successfully added.Press ENTER for Menu.";
-            goToXY( 85 - (username.size()/2 + succesMessage.size()/2) , ++row) ;
+            string succesMessage = " successfully added.";
+            goToXY( 84 - (username.size()/2 + succesMessage.size()/2) , 20 + ++row) ;
             updateDatabaseUsers();
-            //cout << "Database Updated Succesfull";
+            cout << username << succesMessage;
+            Sleep(1000);
             system("cls");
             authManager();
         }
@@ -100,12 +106,12 @@ void logIn(){
 
     int row = 0;
     string usernameMessage = "Your username: ";
-    goToXY(85 - usernameMessage.size()/2 , 20 + row++);
+    goToXY(84 - usernameMessage.size()/2 , 20 + row++);
     cout << usernameMessage;
     cin >> tryUsername;
 
-    string passwordMessage = "Your parola: ";
-    goToXY(85 - passwordMessage.size()/2 , 20 + row ++);
+    string passwordMessage = "Your password: ";
+    goToXY(84 - passwordMessage.size()/2 , 20 + row ++);
     cout << passwordMessage;
     cin >> tryPassword;
 
@@ -113,18 +119,17 @@ void logIn(){
     {
         if ( DatabaseUsers[tryUsername].password == tryPassword )
         {
-            string succesMessage = " logged in successfully. Press ENTER to continue...";
-            goToXY(85 - (tryUsername.size()/2 + succesMessage.size()/2), 20 + ++row );
+            string succesMessage = " logged in successfully.";
+            goToXY(84 - (tryUsername.size()/2 + succesMessage.size()/2), 20 + ++row );
             cout << "User "<< tryUsername << succesMessage ;
-            cin.ignore();
-            cin.get();
+            Sleep(500);
             system("cls");
             loggedInMenu(tryUsername);
         }
         else
         {
             string errorMessage = "Wrong username/password.";
-            goToXY(85 - errorMessage.size()/2 , 20 + ++row );
+            goToXY(84 - errorMessage.size()/2 , 20 + ++row );
             cout << errorMessage;
             cin.ignore();
             cin.get();
@@ -135,7 +140,7 @@ void logIn(){
     else
     {
             string errorMessage = "Wrong username/password.";
-            goToXY(85 - errorMessage.size()/2, 20 + ++row);
+            goToXY(84 - errorMessage.size()/2, 20 + ++row);
             cout << errorMessage;
             cin.ignore();
             cin.get();
@@ -146,30 +151,30 @@ void logIn(){
 
 void loggedInMenu( string currentUser ){
     string welcomeMessage = "Welcome Back ";
-    goToXY(85 - (currentUser.size()/2 + welcomeMessage.size()/2), 3);
+    goToXY(84 - (currentUser.size()/2 + welcomeMessage.size()/2), 3);
     cout << welcomeMessage << currentUser;
 
     string balanceMessage = "Your balance is: ";
     goToXY(150 - (balanceMessage.size()/2 ),4);
-    cout << balanceMessage << DatabaseUsers[currentUser].balance;
+    cout << balanceMessage << DatabaseUsers[currentUser].balance << "$";
 
     string fastAction = "Select number to do an action: ";
     string logOutAction = "1) Logout";
     string changePassAction = "2) Change password";
-    string seeAllProductAction = "3) Go to another page to see other people products ";
+    string seeAllProductAction = "3) All Products";
     string yourShopAction = "4) Go to your personal shop";
     int row = 15;
     int decision;
 
-    goToXY(85 - logOutAction.size()/2 , row++);
+    goToXY(84 - logOutAction.size()/2 , row++);
     cout << logOutAction;
-    goToXY(85 - changePassAction.size()/2 , row++);
+    goToXY(84 - changePassAction.size()/2 , row++);
     cout << changePassAction;
-    goToXY(85 - seeAllProductAction.size()/2 , row++);
+    goToXY(84 - seeAllProductAction.size()/2 , row++);
     cout << seeAllProductAction;
-    goToXY(85 - yourShopAction.size()/2 , row++);
+    goToXY(84 - yourShopAction.size()/2 , row++);
     cout << yourShopAction;
-    goToXY(85 - fastAction.size()/2 , row++);
+    goToXY(84 - fastAction.size()/2 , row++);
     cout << fastAction;
     cin >> decision;
 
@@ -187,43 +192,52 @@ void loggedInMenu( string currentUser ){
             string goodUsername;
             string oldPassword;
             string newPassword;
-            goToXY(85 - usernameMessage.size()/2 , 5 + row++);
+            goToXY(84 - usernameMessage.size()/2 , 5 + row++);
             cout << usernameMessage, cin >> goodUsername;
 
-            goToXY(85 - oldPassMessage.size()/2 , 5 + row++);
+            goToXY(84 - oldPassMessage.size()/2 , 5 + row++);
             cout << oldPassMessage, cin >> oldPassword;
 
-            goToXY(85 - newPassMessage.size()/2, 5 + row++);
+            goToXY(84 - newPassMessage.size()/2, 5 + row++);
             cout << newPassMessage, cin >> newPassword;
 
-            if ( goodUsername == currentUser && oldPassword == DatabaseUsers[currentUser].password )
+            if ( oldPassword.size() < 8 )
             {
-                DatabaseUsers[currentUser].password = newPassword;
-                updateDatabaseUsers();
-                string succesMessage = "Password changed. Press ENTER to continue... ";
-                goToXY(85 - succesMessage.size()/2, 6 + row++);
-                cout << succesMessage;
+                string errorMessage = "Sorry but your password must contain 8 characters.Press ENTER to retry...";
+                goToXY(84 - errorMessage.size()/2 , 5 + row++);
                 cin.ignore();
                 cin.get();
                 system("cls");
                 loggedInMenu(currentUser);
             }
+            else if ( goodUsername == currentUser && oldPassword == DatabaseUsers[currentUser].password )
+                {
+                    DatabaseUsers[currentUser].password = newPassword;
+                    updateDatabaseUsers();
+                    string succesMessage = "Password changed. Press ENTER to continue... ";
+                    goToXY(84 - succesMessage.size()/2, 6 + row++);
+                    cout << succesMessage;
+                    cin.ignore();
+                    cin.get();
+                    system("cls");
+                    loggedInMenu(currentUser);
+                }
         }
         else if ( decision == 3 )
             {
-            ///allProducts();
-
+                system("cls");
+                viewAllProducts(currentUser);
             }
             else if ( decision == 4 )
                 {
                     system("cls");
-                    yourProducts(currentUser);
+                    yourShop(currentUser);
 
                 }
                 else
                 {
                     string errorMessage = "Invalid number. Press Enter to try again...";
-                    goToXY(85 - errorMessage.size()/2 , ++row);
+                    goToXY(84 - errorMessage.size()/2 , ++row);
                     cout << errorMessage;
                     cin.ignore();
                     cin.get();
@@ -231,14 +245,11 @@ void loggedInMenu( string currentUser ){
                     loggedInMenu(currentUser);
                 }
 
-
-
-
 }
 
 void authManager(){
     string welcomeMessage = "Welcome to Virtual Market";
-    goToXY(85 - welcomeMessage.size()/2 , 20 );
+    goToXY(84 - welcomeMessage.size()/2 , 20 );
     cout << welcomeMessage;
     int decision;
     string registerMessage = "1) To register an account";
@@ -247,11 +258,11 @@ void authManager(){
 
     int row = 22;
 
-    goToXY(85-registerMessage.size()/2 , row++);
+    goToXY(84-registerMessage.size()/2 , row++);
     cout << registerMessage;
-    goToXY(85-loginMessage.size()/2 , row++);
+    goToXY(84-loginMessage.size()/2 , row++);
     cout << loginMessage;
-    goToXY(85-fastAction.size()/2 , row++);
+    goToXY(84-fastAction.size()/2 , row++);
     cout << fastAction;
     cin >> decision;
 
@@ -268,7 +279,7 @@ void authManager(){
         else
         {
             string errorMessage = "Invalid Number. Try Again.";
-            goToXY(85 - errorMessage.size()/2 , ++row);
+            goToXY(84 - errorMessage.size()/2 , ++row);
             Sleep(1000);
             system("cls");
             authManager();

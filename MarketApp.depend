@@ -1,0 +1,34 @@
+# depslib dependency file v1.0
+1551611166 source:d:\c++\marketapp\main.cpp
+	<iostream>
+	"interface.h"
+	"auth.h"
+	"shop.h"
+
+1551610501 d:\c++\marketapp\interface.h
+	"windows.h"
+
+1551616933 d:\c++\marketapp\auth.h
+	<iostream>
+	<fstream>
+	<map>
+	<string>
+	"interface.h"
+	"shop.h"
+	"database.h"
+
+1551618065 d:\c++\marketapp\shop.h
+	<iostream>
+	<fstream>
+	<map>
+	<string>
+	"interface.h"
+	"auth.h"
+	"database.h"
+
+1551615198 d:\c++\marketapp\database.h
+	<iostream>
+	<fstream>
+	<map>
+	<string>
+

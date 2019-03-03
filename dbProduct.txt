@@ -1,3 +1,2 @@
-alex Carte 10 1 Bucuresti future
-george Calculator 200 2 Sibiu future
-alex Masina 1000 1 Bucuresti future
+Alex Gum 3 16 Bucharest 
+Alex Tea 7 2 Bucharest 

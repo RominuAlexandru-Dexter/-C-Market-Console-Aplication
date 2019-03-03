@@ -1,2 +1,2 @@
-alex password124 0
-george simplepassword 0
+Alex Password123! 32
+George Password123! 8

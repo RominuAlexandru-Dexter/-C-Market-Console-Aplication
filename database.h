@@ -13,7 +13,6 @@ struct infoProduct{
     int price;
     int amount;
     string city;
-    string expirationDate;
 };
 multimap < string , infoProduct > DatabaseProduct;
 

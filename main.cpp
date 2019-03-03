@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    SetWindow(170,50);
+    SetWindow(168,50); /// In case there are too many elements of view AllProduct list , just increase height
     initDatabaseUsers();
     initDatabaseProduct();
     authManager();
