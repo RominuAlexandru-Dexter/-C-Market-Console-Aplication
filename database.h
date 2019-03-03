@@ -11,7 +11,7 @@ using namespace std;
 struct infoProduct{
     string name;
     float price;
-    float amount;
+    int amount;
     string city;
 };
 multimap < string , infoProduct > DatabaseProduct;
