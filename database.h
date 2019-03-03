@@ -10,8 +10,8 @@ using namespace std;
 
 struct infoProduct{
     string name;
-    int price;
-    int amount;
+    float price;
+    float amount;
     string city;
 };
 multimap < string , infoProduct > DatabaseProduct;
