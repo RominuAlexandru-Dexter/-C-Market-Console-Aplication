@@ -309,7 +309,7 @@ void buyProduct(string currentUser, int row){
     cout << productAmountMessage;
     cin >> amountToBuy;
     bool isCorrectData = false;
-    if ( amountToBuy > 0 )
+    if ( amountToBuy > 0 && productSeller != currentUser )
     {
         for (multimap<string,infoProduct>::iterator it = DatabaseProduct.begin(); it != DatabaseProduct.end(); it++)
         {
