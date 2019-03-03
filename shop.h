@@ -267,10 +267,10 @@ void viewAllProducts(string currentUser){
     cout << fastAction;
     row += 2;
 
-    int decision;
+    string decision;
     cin >> decision;
 
-    if ( decision == 1 )
+    if ( decision == "1" )
     {
         buyProduct(currentUser, row);
     }

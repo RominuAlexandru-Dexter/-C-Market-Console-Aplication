@@ -62,7 +62,7 @@ void signUp(){
     bool isGoodPass = false;
     for ( int i = 0 ; i <= newUserData.password.size() ; ++ i )
     {
-        if ( isdigit(newUserData.password[i]) || newUserData.password[i] == '!' || newUserData.password[i] == '@' || newUserData.password[i] == '#' || newUserData.password[i] == '$' || newUserData.password[i] == '%' || newUserData.password[i] == '^' || newUserData.password[i] == '&' || newUserData.password[i] == '*')
+        if ( isdigit(newUserData.password[i]) && ( newUserData.password[i] == '!' || newUserData.password[i] == '@' || newUserData.password[i] == '#' || newUserData.password[i] == '$' || newUserData.password[i] == '%' || newUserData.password[i] == '^' || newUserData.password[i] == '&' || newUserData.password[i] == '*'))
         isGoodPass = true;
     }
     newUserData.balance = 20;
@@ -109,7 +109,6 @@ void logIn(){
     goToXY(84 - usernameMessage.size()/2 , 20 + row++);
     cout << usernameMessage;
     cin >> tryUsername;
-
     string passwordMessage = "Your password: ";
     goToXY(84 - passwordMessage.size()/2 , 20 + row ++);
     cout << passwordMessage;
@@ -164,7 +163,7 @@ void loggedInMenu( string currentUser ){
     string seeAllProductAction = "3) All Products";
     string yourShopAction = "4) Go to your personal shop";
     int row = 15;
-    int decision;
+    string decision;
 
     goToXY(84 - logOutAction.size()/2 , row++);
     cout << logOutAction;
@@ -178,12 +177,12 @@ void loggedInMenu( string currentUser ){
     cout << fastAction;
     cin >> decision;
 
-    if( decision == 1 )
+    if( decision == "1" )
     {
         system("cls");
         authManager();
     }
-    else if (decision == 2 )
+    else if (decision == "2" )
         {
             string usernameMessage = "Your username: ";
             string oldPassMessage = "Old password: ";
@@ -201,10 +200,18 @@ void loggedInMenu( string currentUser ){
             goToXY(84 - newPassMessage.size()/2, 5 + row++);
             cout << newPassMessage, cin >> newPassword;
 
-            if ( oldPassword.size() < 8 )
+            bool isGoodPass = false;
+            for ( int i = 0 ; i <= newPassword.size() ; ++ i )
+            {
+                if ( newPassword[i] == '!' || newPassword[i] == '@' || newPassword[i] == '#' || newPassword[i] == '$' || newPassword[i] == '%' || newPassword[i] == '^' || newPassword[i] == '&' || newPassword[i] == '*')
+                isGoodPass = true;
+            }
+
+            if ( newPassword.size() < 8 && !isGoodPass )
             {
                 string errorMessage = "Sorry but your password must contain 8 characters.Press ENTER to retry...";
                 goToXY(84 - errorMessage.size()/2 , 5 + row++);
+                cout << errorMessage;
                 cin.ignore();
                 cin.get();
                 system("cls");
@@ -223,12 +230,12 @@ void loggedInMenu( string currentUser ){
                     loggedInMenu(currentUser);
                 }
         }
-        else if ( decision == 3 )
+        else if ( decision == "3" )
             {
                 system("cls");
                 viewAllProducts(currentUser);
             }
-            else if ( decision == 4 )
+            else if ( decision == "4" )
                 {
                     system("cls");
                     yourShop(currentUser);
@@ -251,7 +258,7 @@ void authManager(){
     string welcomeMessage = "Welcome to Virtual Market";
     goToXY(84 - welcomeMessage.size()/2 , 20 );
     cout << welcomeMessage;
-    int decision;
+    string decision;
     string registerMessage = "1) To register an account";
     string loginMessage = "2) Login in your account";
     string fastAction = "Select number to do an action: ";
@@ -266,12 +273,12 @@ void authManager(){
     cout << fastAction;
     cin >> decision;
 
-    if ( decision == 1 )
+    if ( decision == "1" )
     {
         system("cls");
         signUp();
     }
-    else if ( decision == 2 )
+    else if ( decision == "2" )
         {
             system("cls");
             logIn();
