@@ -274,12 +274,17 @@ void viewAllProducts(string currentUser){
     {
         buyProduct(currentUser, row);
     }
-    else
-    {
-    system("cls");
-    SetWindow(168,50);
-    loggedInMenu(currentUser);
-    }
+    else if ( decision == "2")
+        {
+        system("cls");
+        SetWindow(168,50);
+        loggedInMenu(currentUser);
+        }
+        else
+        {
+            system("cls");
+            viewAllProducts(currentUser);
+        }
 }
 
 void buyProduct(string currentUser, int row){
@@ -338,7 +343,6 @@ void buyProduct(string currentUser, int row){
                     {
                     string errorMessage = "Not enough money!";
                     string continueMessage = "Press ENTER to try again...";
-
                     goToXY(84 - errorMessage.size()/2 , row++);
                     cout << errorMessage;
                     goToXY(84 - continueMessage.size()/2, row++);
@@ -349,7 +353,16 @@ void buyProduct(string currentUser, int row){
                     viewAllProducts(currentUser);
                     }
             }
-
+            else
+            {
+                string errorMessage = "Invalid Name or Insufficient Amount!Press ENTER to try again...";
+                goToXY(84- errorMessage.size()/2, row++);
+                cout << errorMessage;
+                cin.ignore();
+                cin.get();
+                system("cls");
+                viewAllProducts(currentUser);
+            }
         }
 
     if(isCorrectData)
