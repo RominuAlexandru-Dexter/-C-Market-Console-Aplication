@@ -17,6 +17,7 @@ Or just copy code and respect files names
 
 ## General Idea about this project
 * I forced myself to use Google as less as possible - i read documentation of windows.h
-* I tried to be organized and use good names for function/variable to be easy to read/use
+* I tried to be organized and use good names for function/variable to be easy to read/use.
 * I had to debug just few times... few mistakes.
-* Easier than i expected to build it... thanks to problems solving
+* Easier than i expected to build it... thanks to problems solving.
+* I want thank Fulgerul46 for his time to test and discover some bugs. https://github.com/fulgerul46
