@@ -115,9 +115,9 @@ void addProduct( string currentUser ){
     int row = 10;
     string productNameMessage = "Product Name: ";
     string productPriceMessage = "Price: ";
-    string productAmountMessage = "Amount left: ";
+    string productAmountMessage = "Amount: ";
     string productCityMessage = "Where to pick up: ";
-
+    string negativeValue = "You can't have negative value or amount.Press ENTER to try again...";
     infoProduct newProductData;
 
     goToXY(84 - productNameMessage.size()/2, ++row);
@@ -128,11 +128,28 @@ void addProduct( string currentUser ){
     goToXY(84 - productPriceMessage.size()/2 , ++row);
     cout << productPriceMessage;
     cin >> newProductData.price;
+    if ( newProductData.price < 0 )
+    {
+        goToXY(84 - negativeValue.size()/2 , ++row);
+        cout << negativeValue;
+        cin.ignore();
+        cin.get();
+        system("cls"),
+        addProduct(currentUser);
 
+    }
     goToXY(84 - productAmountMessage.size()/2 , ++row);
     cout << productAmountMessage;
     cin >> newProductData.amount;
-
+    if ( newProductData.amount < 0 )
+    {
+        goToXY(84 - negativeValue.size()/2 , ++row);
+        cout << negativeValue;
+        cin.ignore();
+        cin.get();
+        system("cls"),
+        addProduct(currentUser);
+    }
     goToXY(84 - productCityMessage.size()/2 , ++row);
     cout << productCityMessage;
     cin >> newProductData.city;
@@ -140,7 +157,7 @@ void addProduct( string currentUser ){
     row++;
     if ( newProductData.name.size() < 3 )
     {
-        string errorMessage = "Product Name must have at least 3 letters.Press ENTER to try again...";
+        string errorMessage = "Product Name must have at least 3 letters and positive price.Press ENTER to try again...";
         goToXY(84 - errorMessage.size()/2, ++row);
         cout << errorMessage;
         cin.ignore();
@@ -309,7 +326,7 @@ void buyProduct(string currentUser, int row){
     cout << productAmountMessage;
     cin >> amountToBuy;
     bool isCorrectData = false;
-    if ( amountToBuy > 0 && productSeller != currentUser )
+    if ( amountToBuy > 0 && productSeller != currentUser  )
     {
         for (multimap<string,infoProduct>::iterator it = DatabaseProduct.begin(); it != DatabaseProduct.end(); it++)
         {
